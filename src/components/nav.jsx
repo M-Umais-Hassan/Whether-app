@@ -4,7 +4,7 @@ export default function Nav_bar() {
     return (
         <nav className="nav">
             <h1 className="brand">
-                <a href="#">Weath<span>er-Gu</span>ider</a>
+                <i className="fa fa-home"></i><a href="#">Weath<span>er-Gu</span>ider</a>
             </h1>
             <ul>
                 <li><a href="#">Home</a></li>

@@ -60,7 +60,7 @@ class App extends React.Component {
       <div className="app"> 
         <div className="container">
           <Nav_bar />
-          <Home />
+          <Home weatherData = {this.state.data} />
           </div>
       </div>
     );

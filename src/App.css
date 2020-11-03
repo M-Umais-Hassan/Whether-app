@@ -98,12 +98,38 @@ h1 > a {
 
 /*-------------------Home Page---------------------*/
 
-.box {
+/* .box {
   margin-top: 7%;
   box-shadow: 5px 5px 20px;
-}
+} */
 
-.box .row .col-md-10 .inner {
+/* .box .row .col-md-10 .inner {
   padding: 10px 0;
   font-family: "Roboto Cn", sans-serif;
+} */
+
+.box {
+  background: white;
+  margin-top: 7%;
+  padding: 5%;
+  box-shadow: 10px 10px 20px;
+}
+
+.box #inner {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+}
+
+.box #inner h1 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.box #inner h3 {
+  font-size: 20px;
+}
+
+.box #inner .lower {
+  margin-top: 30px;
+  text-align: center;
 }
