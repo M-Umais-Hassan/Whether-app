@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-export default function Home(props) { 
-    console.log(props)
+export default function Home_inner(props) {  
     return (
         <div className="box">
             <Container>
@@ -40,15 +39,5 @@ export default function Home(props) {
     );
   
 }
-
-// <Col md={4}>
-//                                     <h1>19 &#8451; , Sunny</h1><br/> <img src="bg-img.jpg" alt="This image"/>
-//                                     <h3>Raiwind</h3>
-//                                     <h4>Lahore, Pakistan</h4>
-//                                 </Col>
-//                                 <Col md={4}>
-//                                     <img src="bg-img.jpg" alt="This image"/>
-//                                 </Col>
-//                                 <Col md={4}></Col>
 
 
