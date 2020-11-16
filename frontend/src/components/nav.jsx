@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import AuthOptions from './auth/AuthOptions';
 
 export default function Nav_bar() {
     return (
@@ -11,7 +12,7 @@ export default function Nav_bar() {
                 <li><Link to='/'>Home</Link></li>
                 <li><Link to='/about'>About</Link></li>
                 <li><Link>Saved</Link></li>
-                <li><Link to='/ask'>Ask</Link></li>
+                <AuthOptions />
             </ul>
         </nav>
     );

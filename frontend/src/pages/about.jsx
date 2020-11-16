@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import bg from '../assets/about-bg.jpg'; 
-import Nav_bar from '../components/nav';
 import { Row, Col } from 'react-bootstrap';
 
 export default function About_page() {
     return (
         <div className="about">
-            <Nav_bar />
             <Row>
             <Col md="1"></Col>
             <Col md="10">
