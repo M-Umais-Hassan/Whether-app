@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //Calling CSS files
 import './App.css';
@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //importing pages from pages folder
 import Home_page from './pages/home';
 import About_page from './pages/about';
+import Saved_page from './pages/saved';
 import login from './components/auth/login';
 import register from './components/auth/register';
 import Nav_bar from './components/nav';
@@ -16,19 +17,13 @@ import userContext from './context/userContext';
 //importing axios
 import Axios from 'axios';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-  
-    this.state = {
-       userData: {
-         token: undefined,
-         user: undefined,
-       }
-    }
-  }
+export default function App() {
+  const [userData, setuserData] = useState({
+    token: undefined,
+    user: undefined,
+  });
 
-  componentDidMount() {
+  useEffect(() => {
     const checkLoggedIn = async () => {
       let token = localStorage.getItem("auth-token");
       if(token === null) {
@@ -42,36 +37,35 @@ class App extends React.Component {
       );
       if(tokenRes.data == true) {
         const userRes = await Axios.get("http://localhost:5000/users/", { headers: {"x-auth-token": token}, });
-        let data = {
+        setuserData({
           token,
-          user: userRes,
-        }
-        this.setState({userData: data});
+          user: userRes.data,
+        });
       }
-    }
+    };
 
     checkLoggedIn();
-  }
+  }, []);
 
-  render() {
     return(
-      <Router>
-        <userContext.Provider value={{ userData: this.state.userData }}>
-          <div className="app"> 
-            <div className="container">
-              <Nav_bar />
-              <Switch>
-                <Route path="/" exact component={Home_page} />
-                <Route path="/about" component={About_page} />
-                <Route path="/login" component={login} />
-                <Route path="/register" component={register} />
-              </Switch>
+      <>
+        <Router>
+          <userContext.Provider value={{ userData, setuserData }}> 
+            <div className="app"> 
+              <div className="container">
+                <Nav_bar />
+                <Switch>
+                  <Route path="/" exact component={Home_page} />
+                  <Route path="/about" component={About_page} />
+                  <Route path="/saved" component={Saved_page} />
+                  <Route path="/login" component={login} />
+                  <Route path="/register" component={register} />
+                </Switch>
+              </div>
             </div>
-          </div>
-        </userContext.Provider>
-      </Router>
+          </userContext.Provider>
+        </Router>
+      </>
     );
-  }
 }
 
-export default App;

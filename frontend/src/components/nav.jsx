@@ -1,8 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
-import AuthOptions from './auth/AuthOptions';
+import { useHistory } from "react-router-dom";
+import userContext from '../context/userContext';
 
 export default function Nav_bar() {
+    const {userData, setuserData} = useContext(userContext);
+
+    const  history = useHistory();
+
+    const register = () => history.push("/register");
+    const login = () => history.push("/login");
+    const logout = () => {
+        setuserData({
+            token: undefined,
+            user: undefined
+        })
+        localStorage.setItem("auth-token", "");
+    };
+
     return (
         <nav className="nav">
             <h1 className="brand">
@@ -11,8 +26,16 @@ export default function Nav_bar() {
             <ul>
                 <li><Link to='/'>Home</Link></li>
                 <li><Link to='/about'>About</Link></li>
-                <li><Link>Saved</Link></li>
-                <AuthOptions />
+                <li><Link to='/saved'>Saved</Link></li>
+                {
+                    userData.user ? (
+                    <li><Link onClick={logout}>Log out</Link></li> ) : ( 
+                    <>
+                        <li><Link onClick={register}>Register</Link></li>
+                        <li><Link onClick={login}>Login</Link></li>
+                    </>
+                    )
+                }
             </ul>
         </nav>
     );

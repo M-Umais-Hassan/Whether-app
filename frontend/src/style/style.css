@@ -155,3 +155,17 @@ div.about {
 div.about .box {
   margin-top: 200px;
 }
+
+/* Error */
+.error-notice {
+  padding: 0.1rem;
+  color: red;
+  border: 1px solid #e07c7c;
+  border-radius: 8px;
+  background-color: #f8d6d6;
+  text-align: center;
+}
+.error-notice button {
+  border: none;
+  font-weight: bold;
+}
