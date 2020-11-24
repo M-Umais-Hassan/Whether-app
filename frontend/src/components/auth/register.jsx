@@ -4,6 +4,7 @@ import Axios from 'axios';
 import UserContext from '../../context/userContext';
 import ErrorNotice from '../../misc/ErrorNotice';
 import {Link} from 'react-router-dom';
+import Nav_bar from '../nav';
 
 export default function Register() {
     const [email, setemail] = useState();
@@ -38,6 +39,7 @@ export default function Register() {
 
     return (
         <div>
+            <Nav_bar />
             <h1>Register</h1>
             {
                 error && <ErrorNotice message={error} clearError={()=>setError(undefined)} />

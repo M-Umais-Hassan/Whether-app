@@ -2,6 +2,7 @@ import React from 'react';
 import Axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
 import Search_bar from './search-bar'
+import SaveLocation from '../components/save-location';
 
 var check = false;
 
@@ -13,7 +14,7 @@ class WeatherData extends React.Component {
             latitude: 0
         },
         data: {},
-        inputData: ""
+        inputData: "",
     }
 
     componentDidMount() {
@@ -111,7 +112,7 @@ class WeatherData extends React.Component {
                             </Row>
                         </Container>
                     </div>
-                    
+                    <SaveLocation loc = {this.state.data.location} />
                 </div>
             );
         }

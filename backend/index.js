@@ -26,3 +26,4 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
 
 //set up routes
 app.use('/users', require('./routes/userRouter'));
+app.use('/saveLoc', require('./routes/savedRouter'));

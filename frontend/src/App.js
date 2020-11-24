@@ -11,7 +11,6 @@ import About_page from './pages/about';
 import Saved_page from './pages/saved';
 import login from './components/auth/login';
 import register from './components/auth/register';
-import Nav_bar from './components/nav';
 //importing cotext
 import userContext from './context/userContext';
 //importing axios
@@ -53,7 +52,6 @@ export default function App() {
           <userContext.Provider value={{ userData, setuserData }}> 
             <div className="app"> 
               <div className="container">
-                <Nav_bar />
                 <Switch>
                   <Route path="/" exact component={Home_page} />
                   <Route path="/about" component={About_page} />
