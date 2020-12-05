@@ -1,7 +1,18 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
 
 export default function Saved_inner_box() {
+    const [location, setLocation] = useState([])
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/saveLoc/all').then(res => {
+            console.log(res)
+            setLocation(res.location)
+        }).catch(err => {
+            console.log(err)
+        })
+    }, [])
     return (
         <div className="saved-box">
             <Row>

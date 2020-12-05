@@ -23,30 +23,6 @@ export default function Saved() {
                 <Col md={4}>
                     <Saved_inner_box />    
                 </Col>
-                <Col md={4}>
-                    <Saved_inner_box />    
-                </Col>
-                <Col md={4}>
-                    <Saved_inner_box />    
-                </Col>
-                <Col md={4}>
-                    <Saved_inner_box />    
-                </Col>
-                <Col md={4}>
-                    <Saved_inner_box />    
-                </Col>
-                <Col md={4}>
-                    <Saved_inner_box />    
-                </Col>
-                <Col md={4}>
-                    <Saved_inner_box />    
-                </Col>
-                <Col md={4}>
-                    <Saved_inner_box />    
-                </Col>
-                <Col md={4}>
-                    <Saved_inner_box />    
-                </Col>
             </Row>
             <Pagination />
         </div>

@@ -32,14 +32,16 @@ export default function Login() {
     return (
         <div>
             <Nav_bar />
-            <h1>Login</h1>
-            { error && <ErrorNotice message={error} clearError={()=>setError(undefined)} /> }
-            <form onSubmit={submit}>
-                <input type="email" id="login-email" onChange={(e) => setemail(e.target.value)} /><br/><br/>
-                <input type="password" id="login-password" onChange={(e) => setpassword(e.target.value)} /><br/><br/>
-                Don't have an account? <Link to="/register">Register here</Link><br/>
-                <input type="submit" value="Login"/>
-            </form>
+            <div className="login-box">
+                <h1>Login</h1>
+                { error && <ErrorNotice message={error} clearError={()=>setError(undefined)} /> }
+                <form onSubmit={submit}>
+                    <input type="email" id="login-email" onChange={(e) => setemail(e.target.value)} /><br/><br/>
+                    <input type="password" id="login-password" onChange={(e) => setpassword(e.target.value)} /><br/><br/>
+                    Don't have an account? <Link to="/register">Register here</Link><br/>
+                    <input type="submit" className="login-btn" value="Login"/>
+                </form>
+            </div>
         </div>
     )
 }

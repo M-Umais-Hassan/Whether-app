@@ -40,18 +40,18 @@ export default function Register() {
     return (
         <div>
             <Nav_bar />
-            <h1>Register</h1>
-            {
-                error && <ErrorNotice message={error} clearError={()=>setError(undefined)} />
-            }
-            <form onSubmit={submit}>
-                <input type="email" id="register-email" onChange={(e) => setemail(e.target.value)} /><br/><br/>
-                <input type="password" id="register-password" onChange={(e) => setpassword(e.target.value)} /><br/><br/>
-                <input type="password" id="verify-password" onChange={(e) => setpasswordCheck(e.target.value)} /><br/><br/>
-                <input type="text" id="register-display-name" onChange={(e) => setdisplayName(e.target.value)} /><br/><br/>
-                Alrady have an account? <Link to="/login">Login</Link><br/>
-                <input type="submit" value="Register"/>
-            </form>
+            <div className="register-box">
+                <h1>Register</h1>
+                { error && <ErrorNotice message={error} clearError={()=>setError(undefined)} /> }
+                <form onSubmit={submit}>
+                    <input type="email" id="register-email" onChange={(e) => setemail(e.target.value)} /><br/><br/>
+                    <input type="password" id="register-password" onChange={(e) => setpassword(e.target.value)} /><br/><br/>
+                    <input type="password" id="verify-password" onChange={(e) => setpasswordCheck(e.target.value)} /><br/><br/>
+                    <input type="text" id="register-display-name" onChange={(e) => setdisplayName(e.target.value)} /><br/><br/>
+                    Already have account? <Link to="/login">Login here</Link><br/>
+                    <input type="submit" className="register-btn" value="Register"/>
+                </form>
+            </div>
         </div>
     );
 }

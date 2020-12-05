@@ -1,26 +1,27 @@
 import React from 'react';
 import Axios from 'axios';
-import { Container, Row, Col } from 'react-bootstrap';
-import Search_bar from './search-bar'
-import SaveLocation from '../components/save-location';
-
-var check = false;
+import { Container, Row, Col, Alert } from 'react-bootstrap';
+import Search_bar from './search-bar';
+import Loader from 'react-loader-spinner';
+import { useHistory } from "react-router-dom";
 
 class WeatherData extends React.Component {
 
     state = {
+        loading: false,
         coords: {
-            longitude: 0,
-            latitude: 0
+            longitude: null,
+            latitude: null
         },
         data: {},
         inputData: "",
+        error_msg: "",
     }
 
     componentDidMount() {
         //get the device location (to check if the device supports geo location go at the last of this page)
         if(navigator.geolocation) {
-            check = true;
+            this.setState({loading:false})
             navigator.geolocation.getCurrentPosition((position) => {
                 let newCoords = {
                     latitude: position.coords.latitude,
@@ -29,8 +30,8 @@ class WeatherData extends React.Component {
                 this.setState({coords:newCoords});
 
                 //Calling the weatherstack api
-                Axios.get(`http://api.weatherstack.com/current?access_key=17bc98bc8b74dd85d858ce8f1302c8d7&query=${this.state.coords.latitude}, ${this.state.coords.longitude}`).then(res=>{
-                
+                Axios.get(`http://api.weatherstack.com/current?access_key=17bc98bc8b74dd85d858ce8f1302c8d7&query=${this.state.coords.latitude}, ${this.state.coords.longitude}`)
+                .then(res=>{
                     let weatherData = {
                         location: res.data.location.name,
                         region: res.data.location.region, 
@@ -42,9 +43,16 @@ class WeatherData extends React.Component {
                         humidity: res.data.current.humidity,
                         icon: res.data.current.weather_icons
                     }
-                    this.setState({data:weatherData})
+                    this.setState({data:weatherData, loading:true})
+                })
+                .catch ((err) => {
+                    console.log(err);
+                    this.setState({error_msg: "Sorry some error occur try again later or search for some location."})
                 })
             })
+        }
+        else {
+            
         }
     }
 
@@ -54,7 +62,10 @@ class WeatherData extends React.Component {
 
     changeWeather = (event) => {
         event.preventDefault();
-        Axios.get(`http://api.weatherstack.com/current?access_key=17bc98bc8b74dd85d858ce8f1302c8d7&query=${this.state.inputData}`).then(res=>{
+        this.setState({loading:false})
+        this.setState({error_msg:""});
+        Axios.get(`http://api.weatherstack.com/current?access_key=17bc98bc8b74dd85d858ce8f1302c8d7&query=${this.state.inputData}`)
+        .then(res=>{
             let weatherData = {
                 location: res.data.location.name,
                 region: res.data.location.region, 
@@ -66,65 +77,95 @@ class WeatherData extends React.Component {
                 humidity: res.data.current.humidity,
                 icon: res.data.current.weather_icons
             }
-            this.setState({data:weatherData})
+            let newCoords = {
+                latitude: res.data.location.lat,
+                longitude: res.data.location.lon
+            }
+            this.setState({coords:newCoords});
+            this.setState({data:weatherData, loading:true})
+        })
+        .catch ((err) => {
+            this.setState({error_msg: "Sorry we didn't found the location you are searching for."})
         })
     }
 
     render() {
+        const {loading} = this.state;
         const alert_style = {
             color: "red",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            textAlign: "center",
+            fontSize: "20px"
         };
-        if(check == true) {
-            return(
-                <div>
-                    <Search_bar changeWeather = {this.changeWeather} changeRegion = {this.change} />
-                    <div className="box">
-                        <Container>
-                            <Row>
-                                <Col md={1}></Col>
-                                <Col md={10}>
-                                    <div id="inner">
-                                        <Row>
-                                            <Col md={6}><h1>{this.state.data.temprature} &#8451; , {this.state.data.description}</h1></Col>
-                                            <Col md={4}><img src={this.state.data.icon} alt="icon" height="100px" /></Col>
-                                            <Col md={2}></Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={12}>
-                                                <h3>{this.state.data.location}</h3>
-                                            </Col>
-                                            
-                                        </Row>
-                                        <Row>
-                                            <Col md={12}>
-                                                <h4>{this.state.data.region}, {this.state.data.country}</h4>    
-                                            </Col>
-                                        </Row>
-                                        <Row className="lower">
-                                            <Col md={4}>Wind Speed : {this.state.data.windSpeed} km/h</Col>
-                                            <Col md={4}>Pressure : {this.state.data.pressure} mm</Col>
-                                            <Col md={4}>Humidity : {this.state.data.humidity} %</Col>
-                                        </Row>
-                                    </div>
-                                </Col>
-                                <Col md={1}></Col>
-                            </Row>
-                        </Container>
+        const search_box = {
+            marginTop: "-50px"
+        };
+        if((this.state.coords.longitude != null && this.state.coords.latitude != null) || (this.state.error_msg == "Sorry we didn't found the location you are searching for.")) {
+            if (this.state.error_msg == "") {
+                if (!loading) {
+                    return(
+                        <div className="loading">
+                            <Loader type="BallTriangle" color="crimson" height={100} width={100} />
+                        </div>
+                    );
+                }
+                return(
+                    <div>
+                        <Search_bar changeWeather = {this.changeWeather} changeRegion = {this.change} />
+                        <div className="box">
+                            <Container>
+                                <Row>
+                                    <Col md={1}></Col>
+                                    <Col md={10}>
+                                        <div id="inner">
+                                            <Row>
+                                                <Col md={6}><h1>{this.state.data.temprature} &#8451; , {this.state.data.description}</h1></Col>
+                                                <Col md={4}><img src={this.state.data.icon} alt="icon" height="100px" /></Col>
+                                                <Col md={2}></Col>
+                                            </Row>
+                                            <Row>
+                                                <Col md={12}>
+                                                    <h3>{this.state.data.location}</h3>
+                                                </Col>
+                                                
+                                            </Row>
+                                            <Row>
+                                                <Col md={12}>
+                                                    <h4>{this.state.data.region}, {this.state.data.country}</h4>    
+                                                </Col>
+                                            </Row>
+                                            <Row className="lower">
+                                                <Col md={4}>Wind Speed : {this.state.data.windSpeed} km/h</Col>
+                                                <Col md={4}>Pressure : {this.state.data.pressure} mm</Col>
+                                                <Col md={4}>Humidity : {this.state.data.humidity} %</Col>
+                                            </Row>
+                                        </div>
+                                    </Col>
+                                    <Col md={1}></Col>
+                                </Row>
+                            </Container>
+                        </div>
                     </div>
-                    <SaveLocation loc = {this.state.data.location} />
-                </div>
-            );
+                );
+            } 
+            else {
+                return (
+                    <div>
+                        <Alert style={alert_style} variant='danger'>
+                            <strong>{this.state.error_msg}</strong>
+                        </Alert>
+                        <Search_bar changeWeather = {this.changeWeather} changeRegion = {this.change} />
+                    </div>
+                );
+            }
         }
         else {
             return (
                 <div>
+                    <Alert style={alert_style} variant='danger'>
+                        <strong>Please allow your loation to view your weather data or search any location.</strong>
+                    </Alert>
                     <Search_bar changeWeather = {this.changeWeather} changeRegion = {this.change} />
-                    <div className="box">
-                        <Container>
-                            <h1 style={alert_style}>We cannot find your location please allow location or search any location</h1>
-                        </Container>
-                    </div>
                 </div>
             );
         }
