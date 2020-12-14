@@ -13,6 +13,7 @@ export default function Saved_inner_box() {
             console.log(err)
         })
     }, [])
+    
     return (
         <div className="saved-box">
             <Row>

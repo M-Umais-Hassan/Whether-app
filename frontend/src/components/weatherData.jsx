@@ -3,8 +3,7 @@ import Axios from 'axios';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 import Search_bar from './search-bar';
 import Loader from 'react-loader-spinner';
-import { useHistory } from "react-router-dom";
-
+import SaveLocation from './save-location';
 class WeatherData extends React.Component {
 
     state = {
@@ -16,6 +15,7 @@ class WeatherData extends React.Component {
         data: {},
         inputData: "",
         error_msg: "",
+        saveLoc: "",
     }
 
     componentDidMount() {
@@ -145,6 +145,7 @@ class WeatherData extends React.Component {
                                 </Row>
                             </Container>
                         </div>
+                        <SaveLocation loc={this.state.data.location} /> 
                     </div>
                 );
             } 
