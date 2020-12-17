@@ -31,7 +31,7 @@ export default function Nav_bar() {
                     userData.user ? (
                     <li><Link onClick={logout}>Log out</Link></li> ) : ( 
                     <>
-                        <li><Link onClick={register}>Register</Link></li>
+                        {/* <li><Link onClick={register}>Register</Link></li> */}
                         <li><Link onClick={login}>Login</Link></li>
                     </>
                     )

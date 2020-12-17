@@ -11,6 +11,7 @@ import About_page from './pages/about';
 import Saved_page from './pages/saved';
 import login from './components/auth/login';
 import register from './components/auth/register';
+import AskBot from './components/askbot/AskBot';
 //importing cotext
 import userContext from './context/userContext';
 //importing axios
@@ -58,6 +59,7 @@ export default function App() {
                   <Route path="/saved" component={Saved_page} />
                   <Route path="/login" component={login} />
                   <Route path="/register" component={register} />
+                  <Route path="/askBot" component={AskBot} />
                 </Switch>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { Container, Row, Col, Alert } from 'react-bootstrap';
 import Search_bar from './search-bar';
 import Loader from 'react-loader-spinner';
 import SaveLocation from './save-location';
+
 class WeatherData extends React.Component {
 
     state = {
@@ -50,6 +51,7 @@ class WeatherData extends React.Component {
                     this.setState({error_msg: "Sorry some error occur try again later or search for some location."})
                 })
             })
+            
         }
         else {
             

@@ -34,4 +34,13 @@ router.delete("/:id", auth, async (req, res) => {
     res.json(deleteLoc);
 });
 
+router.get('/findlocation/:loc', async (req, res) => {
+    try {
+        const getByloc = await Location.findOne({ Location: req.params.loc });
+        return res.json(getByloc);
+    } catch (error) {
+        res.json({ error: message });
+    }
+});
+
 module.exports = router;

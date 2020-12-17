@@ -1,18 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import axios from 'axios';
+import Axios from 'axios';
 
 export default function Saved_inner_box() {
     const [location, setLocation] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:5000/saveLoc/all').then(res => {
-            console.log(res)
-            setLocation(res.location)
-        }).catch(err => {
-            console.log(err)
-        })
-    }, [])
+        const getLoc = async (e) => {
+            let token = localStorage.getItem("auth-token");
+            if(token != "") {
+                await Axios.get(
+                    "http://localhost:5000/saveLoc/all",
+                    { headers: {"x-auth-token": token} }
+                )
+                .then((res) => {
+                    console.log(res.data[0]);
+                    console.log(res.data.length);
+                })
+                .catch((err) => console.log(err));
+            }
+        }
+        getLoc();
+    }, []);
     
     return (
         <div className="saved-box">
