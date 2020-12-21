@@ -141,21 +141,6 @@ button {
   text-align: center;
 }
 
-/* ------------------about-------------------- */
-
-div.about {
-  background: url("../assets/about-bg.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 70vh;
-  text-transform: none;
-  margin: 0 -127px;
-  padding: 0 127px;
-}
-div.about .box {
-  margin-top: 200px;
-}
-
 /* Error */
 .error-notice {
   padding: 0.1rem;
@@ -179,6 +164,59 @@ div.about .box {
   box-shadow: 10px 10px 20px;
 }
 
+input.saveBtn {
+  font-size: 15px;
+  font-weight: bold;
+  position: absolute;
+  right: 0;
+  margin-right: 150px;
+  margin-top: -50px;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  letter-spacing: 2px;
+  background-color: crimson;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  width: 170px;
+  text-align: center;
+  transition-duration: 0.4s;
+  overflow: hidden;
+  box-shadow: 0 5px 15px #193047;
+  border-radius: 4px;
+}
+
+input.saveBtn:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px crimson;
+  color: #000;
+}
+
+input.saveBtn:after {
+  content: "";
+  background: crimson;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s;
+}
+
+input.saveBtn:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s;
+}
+
+input.saveBtn:focus {
+  outline: 0;
+}
+
 /* Pagination */
 
 .pagination {
@@ -188,66 +226,209 @@ div.about .box {
 
 /* Login */
 
-.login-box {
-  margin-left: 40%;
-  margin-top: 100px;
-  border: 1px solid black;
-  width: 250px;
-  padding: 20px;
+.login-page {
+  background-image: linear-gradient(rgba(0, 0, 0, 74%), rgba(0, 0, 0, 69%)),
+    url("../assets/about-bg1.jpg");
+  background-size: cover;
+  height: 100vh;
+  position: absolute;
+  width: 100%;
 }
 
-.login-box h1 {
+.main {
+  background-color: #ffffff;
+  width: 400px;
+  height: 500px;
+  margin: 0 auto;
+  border-radius: 1.5em;
+  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+.sign {
+  padding-top: 40px;
+  color: crimson;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+  font-size: 23px;
   text-align: center;
-  padding: 10px;
 }
 
-.login-box input {
-  width: 210px;
+form.form1 {
+  padding-top: 40px;
 }
 
-.login-box .login-btn {
-  margin-top: 20px;
+.un,
+.pass {
+  width: 76%;
+  color: rgb(38, 50, 56);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background: rgba(136, 126, 126, 0.04);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: 50px;
+  margin-left: 46px;
+  text-align: center;
+  margin-bottom: 27px;
+  font-family: "Ubuntu", sans-serif;
 }
 
-@media screen and (max-width: 600px) {
-  .login-box {
-    margin-left: 10%;
-    margin-top: 100px;
-    width: 250px;
-    padding: 20px;
+.un:focus,
+.pass:focus {
+  border: 2px solid rgba(0, 0, 0, 0.18) !important;
+}
+
+.login-btn {
+  cursor: pointer;
+  border-radius: 5em;
+  color: #fff;
+  background: linear-gradient(to right, #0082c6, crimson, #0082c6);
+  border: 0;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-family: "Ubuntu", sans-serif;
+  margin-left: 12%;
+  font-size: 13px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+  width: 76%;
+  outline: none;
+}
+
+.login-btn:hover {
+  background: linear-gradient(to right, #0082c6ba, #ed143db8, #0082c6ba);
+}
+
+.main span {
+  margin-left: 50px;
+}
+
+.login-btn {
+  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+  color: #e1bee7;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .login-page {
+    width: 100%;
+  }
+  .main {
+    border-radius: 0px;
+    width: 300px;
+    height: 420px;
+    margin-left: -0px;
   }
 }
 
 /* Register */
 
-.register-box {
-  margin-left: 40%;
-  margin-top: 60px;
-  border: 1px solid black;
-  width: 250px;
-  padding: 20px;
+.register-page {
+  background-image: linear-gradient(rgba(0, 0, 0, 74%), rgba(0, 0, 0, 69%)),
+    url("../assets/about-bg1.jpg");
+  background-size: cover;
+  height: 100vh;
+  position: absolute;
+  width: 100%;
 }
 
-.register-box h1 {
+form.form1 {
+  padding-top: 40px;
+}
+
+.registerun,
+.registerpass,
+.cpass,
+.email {
+  width: 76%;
+  color: rgb(38, 50, 56);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background: rgba(136, 126, 126, 0.04);
+  padding: 5px 20px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: 50px;
+  margin-left: 46px;
   text-align: center;
-  padding: 10px;
+  margin-bottom: 27px;
+  margin-top: -50px;
+  font-family: "Ubuntu", sans-serif;
 }
 
-.register-box input {
-  width: 210px;
+.r-un:focus,
+.r-pass:focus,
+.r-cpass:focus,
+.r-email:focus {
+  border: 2px solid rgba(0, 0, 0, 0.18) !important;
 }
 
-.register-box .register-btn {
-  margin-top: 20px;
+.register-btn {
+  cursor: pointer;
+  border-radius: 5em;
+  color: #fff;
+  background: linear-gradient(to right, #0082c6, crimson, #0082c6);
+  border: 0;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-family: "Ubuntu", sans-serif;
+  margin-left: 12%;
+  font-size: 13px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+  width: 76%;
+  outline: none;
 }
 
-@media screen and (max-width: 600px) {
-  .register-box {
-    margin-left: 10%;
-    margin-top: 100px;
-    width: 250px;
-    padding: 20px;
+.register-btn:hover {
+  background: linear-gradient(to right, #0082c6ba, #ed143db8, #0082c6ba);
+}
+
+.main span {
+  margin-left: 50px;
+}
+
+.register-btn {
+  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+  color: #e1bee7;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .register-btn {
+    width: 100%;
   }
+  .main {
+    border-radius: 0px;
+    width: 300px;
+    height: 420px;
+    margin-left: -0px;
+  }
+}
+
+.brand .outer-span {
+  color: white;
+  font-weight: 400;
+}
+
+.brand .outer-span:hover {
+  color: #0082c6;
+  transition: 0.5s;
+}
+
+.brand .inner-span {
+  color-adjust: crimson;
 }
 
 /* Loading */
@@ -259,4 +440,62 @@ div.about .box {
   justify-content: center;
   align-items: center;
   margin-top: 15%;
+}
+
+.login-loader {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.register-loader {
+  text-align: center;
+  margin-top: 1px;
+}
+
+/* Chatbot */
+
+.chat-btn {
+  outline: none;
+  position: fixed;
+  right: 50px;
+  bottom: 30px;
+  background: #0082c6;
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  opacity: 0.8;
+  transition: opacity 1s;
+  padding-top: -0px;
+  font-size: 30px;
+}
+
+.chat-btn:hover {
+  opacity: 1;
+}
+
+.chat-popup {
+  position: fixed;
+  right: 50px;
+  bottom: 80px;
+}
+
+/* Saved inner box */
+
+.location {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.show-more {
+  margin-left: 45%;
+}
+
+.remove {
+  margin-left: 5px;
+}
+
+.saved-loader {
+  margin-top: 25%;
+  margin-left: 50%;
 }

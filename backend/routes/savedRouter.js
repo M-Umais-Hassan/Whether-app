@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const auth = require("../middleware/auth");
+const { findOneAndDelete } = require("../models/savedModel");
 const saveLocation = require("../models/savedModel");
 
 router.post("/", auth, async (req, res) => {
@@ -25,22 +26,9 @@ router.get("/all", auth, async (req, res) => {
     res.json(Location);
 });
 
-router.delete("/:id", auth, async (req, res) => {
-    const Loc = await saveLocation.findOne({ userId: req.user, _id: req.params.id });
-    if (!Loc) {
-        return res.status(400).json({msg: "With this id there is no Loc present for current logged in user"});
-    }    
-    const deleteLoc = await saveLocation.findByIdAndDelete(req.params.id);
-    res.json(deleteLoc);
-});
-
-router.get('/findlocation/:loc', async (req, res) => {
-    try {
-        const getByloc = await Location.findOne({ Location: req.params.loc });
-        return res.json(getByloc);
-    } catch (error) {
-        res.json({ error: message });
-    }
+router.delete("/delete/:loc", auth, async (req, res) => {
+    const Loc = await saveLocation.findOneAndDelete({ userId: req.user, location: req.params.loc });
+    res.json(Loc);    
 });
 
 module.exports = router;

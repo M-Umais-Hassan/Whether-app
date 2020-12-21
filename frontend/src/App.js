@@ -52,7 +52,6 @@ export default function App() {
         <Router>
           <userContext.Provider value={{ userData, setuserData }}> 
             <div className="app"> 
-              <div className="container">
                 <Switch>
                   <Route path="/" exact component={Home_page} />
                   <Route path="/about" component={About_page} />
@@ -61,7 +60,6 @@ export default function App() {
                   <Route path="/register" component={register} />
                   <Route path="/askBot" component={AskBot} />
                 </Switch>
-              </div>
             </div>
           </userContext.Provider>
         </Router>
@@ -69,3 +67,6 @@ export default function App() {
     );
 }
 
+// Api keys
+// b9543edbd9760109c497368df500290e
+// b8bded5189dcb274c8d1256ef4e62932

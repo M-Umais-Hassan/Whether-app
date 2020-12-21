@@ -5,9 +5,14 @@ import Search_bar from './search-bar';
 import Loader from 'react-loader-spinner';
 import SaveLocation from './save-location';
 
+var api_key;
+
 class WeatherData extends React.Component {
+    
+    api_key = "b8bded5189dcb274c8d1256ef4e62932";
 
     state = {
+        apiSuccess: false,
         loading: false,
         coords: {
             longitude: null,
@@ -20,6 +25,14 @@ class WeatherData extends React.Component {
     }
 
     componentDidMount() {
+        Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=lahore`)
+        .then((res) => {
+            if (res.data.success=false, res.data.error.info="Your monthly usage limit has been reached. Please upgrade your Subscription Plan.") {
+                api_key = "b9543edbd9760109c497368df500290e";
+            }
+        })
+        .catch(err => console.log(err));
+
         //get the device location (to check if the device supports geo location go at the last of this page)
         if(navigator.geolocation) {
             this.setState({loading:false})
@@ -31,7 +44,7 @@ class WeatherData extends React.Component {
                 this.setState({coords:newCoords});
 
                 //Calling the weatherstack api
-                Axios.get(`http://api.weatherstack.com/current?access_key=17bc98bc8b74dd85d858ce8f1302c8d7&query=${this.state.coords.latitude}, ${this.state.coords.longitude}`)
+                Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${this.state.coords.latitude}, ${this.state.coords.longitude}`)
                 .then(res=>{
                     let weatherData = {
                         location: res.data.location.name,
@@ -53,9 +66,6 @@ class WeatherData extends React.Component {
             })
             
         }
-        else {
-            
-        }
     }
 
     change = (value) => {
@@ -66,7 +76,7 @@ class WeatherData extends React.Component {
         event.preventDefault();
         this.setState({loading:false})
         this.setState({error_msg:""});
-        Axios.get(`http://api.weatherstack.com/current?access_key=17bc98bc8b74dd85d858ce8f1302c8d7&query=${this.state.inputData}`)
+        Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${this.state.inputData}`)
         .then(res=>{
             let weatherData = {
                 location: res.data.location.name,
