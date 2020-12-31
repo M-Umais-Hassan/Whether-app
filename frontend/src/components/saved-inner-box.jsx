@@ -1,15 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Alert } from 'react-bootstrap';
 import Axios from 'axios';
 import Loader from 'react-loader-spinner';
+import Modal from 'react-modal';
+import { AiFillDelete, AiOutlineClose } from 'react-icons/ai';
 
-var api_key = "b8bded5189dcb274c8d1256ef4e62932";
-
+var api_key = "b9543edbd9760109c497368df500290e";
+// b8bded5189dcb274c8d1256ef4e62932
+// b9543edbd9760109c497368df500290e
 export default function Saved_inner_box() {
     const [location, setLocation] = useState([]);
+    const [temprature, setTemprature] = useState();
+    const [description, setDescription] = useState();
+    const [modalLoc, setmodalLoc] = useState();
+    const [icon, setIcon] = useState();
     const [loading, setLoading] = useState(false);
+    const [modal, setModal] = useState(false);
 
     let loc = [];
+    let i = 0;
     useEffect(() => {
         const getLoc = async (e) => {
             setLoading(true);
@@ -33,14 +42,19 @@ export default function Saved_inner_box() {
     }, []);
 
     function showMore(value) {
-        console.log(value);
-        // Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${value}`)
-        // .then(res=>{
-        //     console.log(res);
-        // })
-        // .catch ((err) => {
-        //     console.log(err);
-        // });
+        setLoading(true);
+        setModal(true);
+        Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${value}`)
+        .then((res) => {
+            setTemprature(res.data.current.temperature);
+            setDescription(res.data.current.weather_descriptions[0]);
+            setmodalLoc(res.data.location.name);
+            setIcon(res.data.current.weather_icons);
+            setLoading(false);
+        })
+        .catch ((err) => {
+            console.log(err);
+        });
     }
 
     const deleteLoc = async (Location) => {
@@ -59,8 +73,20 @@ export default function Saved_inner_box() {
         setLocation(loc);
     }
 
+    const alert_style = {
+        color: "red",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: "20px"
+    };
+
     return (
         <div>
+            {loading==false && location.length == 0 ? (
+                <div style={alert_style}>
+                    <strong>No Location Found</strong>
+                </div>
+            ) : null }
             {loading==true ? (
                         <div className="saved-loader">
                             <Loader type="Oval" color="crimson" height={50} width={50} />
@@ -70,38 +96,40 @@ export default function Saved_inner_box() {
                 {location.map((value, index) => {
                     return (
                         <Col md={4}>
-                            <div className="saved-box">
+                            <div id={value} className="saved-box">
+                                <div class="text-right">
+                                    <button id={value} onClick={(e) => deleteLoc(e.target.id)} className="btn btn-lg btn-danger remove"><AiFillDelete /></button>
+                                </div>
                                 <h1 className="location" id={index}>{value}</h1>
-                                <button id={index} className="btn btn-lg btn-info show-more">Show More</button>
-                                <button id={value} onClick={(e) => deleteLoc(e.target.id)} className="btn btn-lg btn-danger remove">Remove</button>
+                                <div class="text-center">
+                                    <button id={value} onClick={(e) => showMore(e.target.id)} className="btn btn-block btn-info showMore">Show More</button>
+                                </div>
+                                <Modal isOpen={modal}>
+                                    {loading==true ? (
+                                        <div className="saved-loader">
+                                            <Loader type="Oval" color="crimson" height={50} width={50} />
+                                        </div>  
+                                    ) : 
+                                    <div>
+                                        <div class="text-right">
+                                            <button onClick={() => setModal(false)} className="close"><AiOutlineClose /></button>
+                                        </div> 
+                                        <div className="model-text">
+                                            <h2>{ modalLoc }</h2>
+                                            <h1>{ temprature } &#8451;</h1>
+                                            <h3>{ description }</h3>
+                                            <img src={ icon } alt="icon" height="150px" />
+                                        </div>
+                                    </div>
+                                    }
+                                </Modal>
                             </div>
                         </Col>
                     );
                 })}
             </Row>
+            <div className="footer"></div>
         </div>
-    )
+    );
 }
 
-
-
-{/* <Col md={4}>
-                        <div className="saved-box">
-                            <Row>
-                                <Col md={6}>
-                                    <Col md={12}><h1>100 C</h1></Col>
-                                    <Col md={12}><h2>Sunny</h2></Col>
-                                </Col>
-                                <Col md={6}>
-                                    Icon
-                                </Col>
-                            </Row>
-                            <Col md={12}>
-                                <h4>{value}</h4>
-                            </Col>
-                            <Col md={12}>
-                                <h5>Raiwind, Pakistan</h5>
-                            </Col>
-                            <button>Remove</button>
-                        </div>
-                    </Col>  */}

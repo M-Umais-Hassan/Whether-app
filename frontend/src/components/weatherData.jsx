@@ -4,6 +4,7 @@ import { Container, Row, Col, Alert } from 'react-bootstrap';
 import Search_bar from './search-bar';
 import Loader from 'react-loader-spinner';
 import SaveLocation from './save-location';
+import { motion } from 'framer-motion';
 
 var api_key;
 
@@ -122,7 +123,11 @@ class WeatherData extends React.Component {
                     );
                 }
                 return(
-                    <div>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.2 }}
+                    >
                         <Search_bar changeWeather = {this.changeWeather} changeRegion = {this.change} />
                         <div className="box">
                             <Container>
@@ -158,7 +163,7 @@ class WeatherData extends React.Component {
                             </Container>
                         </div>
                         <SaveLocation loc={this.state.data.location} /> 
-                    </div>
+                    </motion.div>
                 );
             } 
             else {

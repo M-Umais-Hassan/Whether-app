@@ -7,11 +7,15 @@ import './style/style.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 //importing pages from pages folder
 import Home_page from './pages/home';
-import About_page from './pages/about';
+import About_page from './components/about/about-main';
 import Saved_page from './pages/saved';
 import login from './components/auth/login';
 import register from './components/auth/register';
 import AskBot from './components/askbot/AskBot';
+import About_bot from './components/about/about-bot';
+import Features from './components/about/features';
+import Finish_about from './components/about/finish-about';
+
 //importing cotext
 import userContext from './context/userContext';
 //importing axios
@@ -54,11 +58,14 @@ export default function App() {
             <div className="app"> 
                 <Switch>
                   <Route path="/" exact component={Home_page} />
-                  <Route path="/about" component={About_page} />
+                  <Route path="/about" exact component={About_page} />
                   <Route path="/saved" component={Saved_page} />
                   <Route path="/login" component={login} />
                   <Route path="/register" component={register} />
                   <Route path="/askBot" component={AskBot} />
+                  <Route path="/about/feature" component={Features} />
+                  <Route path="/about/bot" component={About_bot} />
+                  <Route path="/about/finish" component={Finish_about} />
                 </Switch>
             </div>
           </userContext.Provider>

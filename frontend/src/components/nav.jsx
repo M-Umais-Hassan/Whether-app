@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import userContext from '../context/userContext';
+import { motion } from "framer-motion";
 
 export default function Nav_bar() {
     const {userData, setuserData} = useContext(userContext);
@@ -16,10 +17,16 @@ export default function Nav_bar() {
             user: undefined
         })
         localStorage.setItem("auth-token", "");
+        history.push("/");
     };
 
     return (
-        <nav className="nav">
+        <motion.nav className="nav"
+            initial={{ y: -250 }}
+            animate={{ y: -10 }}
+            transition={{ delay: 0.2, type: "spring", stiffness: 120 }}
+        >
+
             <h1 className="brand">
                 <i className="fa fa-home"></i><Link to='/'>Weath<span>er-Gu</span>ider</Link>
             </h1>
@@ -31,13 +38,12 @@ export default function Nav_bar() {
                     userData.user ? (
                     <li><Link onClick={logout}>Log out</Link></li> ) : ( 
                     <>
-                        {/* <li><Link onClick={register}>Register</Link></li> */}
                         <li><Link onClick={login}>Login</Link></li>
                     </>
                     )
                 }
             </ul>
-        </nav>
+        </motion.nav>
     );
   
 }

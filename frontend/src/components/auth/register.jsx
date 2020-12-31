@@ -5,6 +5,7 @@ import UserContext from '../../context/userContext';
 import ErrorNotice from '../../misc/ErrorNotice';
 import {Link} from 'react-router-dom';
 import Loader from 'react-loader-spinner';
+import { motion } from 'framer-motion';
 
 export default function Register() {
     const [email, setemail] = useState();
@@ -49,7 +50,11 @@ export default function Register() {
                         <Link to='/'><span className="outer-span">Weath<span className="inner-span">er-Gu</span>ider</span></Link>
                     </h1>
                 </div>
-                <div className="main">
+                <motion.div className="main"
+                    initial={{ y: -350 }}
+                    animate={{ y: 0 }}
+                    transition={{ delay: 0.2, type: "spring", stiffness: 120 }}
+                >
                     <p className="sign">Sign up</p>
                     { error && <ErrorNotice message={error} /> }
                     <form className="form1" onSubmit={submit}>
@@ -65,7 +70,7 @@ export default function Register() {
                             <Loader type="Oval" color="crimson" height={50} width={50} />
                         </div>  
                     ) : null }
-                </div>
+                </motion.div>
             </div>
         </div>
     );

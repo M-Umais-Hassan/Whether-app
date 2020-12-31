@@ -4,6 +4,7 @@ import ActionProvider from "./ActionProvider";
 import MessageParser from './MessageParser';
 import config from './Config';
 import { FaRobot } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 class AskBot extends React.Component{
     constructor(){
@@ -23,7 +24,13 @@ class AskBot extends React.Component{
                 </div> 
             : null 
             }
-            <button class="chat-btn" onClick={()=>{this.setState({show:!this.state.show})}}><span id="bot-icon"><FaRobot /></span></button>
+            <motion.button class="chat-btn" onClick={()=>{this.setState({show:!this.state.show})}}
+                drag
+                dragConstraints= {{ top: 0, right: 0, left: 0, bottom: 0 }}
+                initial={{ bottom: -250 }}
+                animate={{ bottom: 30 }}
+                transition={{ delay: 3, duration: 2 }}
+            ><span id="bot-icon"><FaRobot /></span></motion.button>
         </div>
       );
     }
