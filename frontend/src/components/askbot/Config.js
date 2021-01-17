@@ -1,5 +1,5 @@
 import React from 'react';
-import { createChatBotMessage, botName, Overview, MessageParser, ActionProviderDocs } from 'react-chatbot-kit';
+import { createChatBotMessage } from 'react-chatbot-kit';
 
 import BotAvatar from './botAvatar';
 

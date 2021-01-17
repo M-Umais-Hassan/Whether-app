@@ -17,6 +17,9 @@ body {
 .about-body h1 {
   margin-bottom: 50px;
   font-size: 40px;
+  background: -webkit-linear-gradient(crimson, #0082c6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .about-body button {

@@ -2,11 +2,13 @@ import Axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import Loader from 'react-loader-spinner';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function SaveLocation(props) {
     const history = useHistory();
     const [location, setLocation] = useState([]);
+    const [loading, setLoading] = useState(false);
     let getloc = [];
     let loc = props.loc;
     const submit = async (e) => {
@@ -18,6 +20,7 @@ export default function SaveLocation(props) {
             { headers: {"x-auth-token": token} }
         );
         if (tokenRes.data == true) {
+            setLoading(true);
             await Axios.get(
                 "http://localhost:5000/saveLoc/all",
                 { headers: {"x-auth-token": token} }
@@ -31,6 +34,7 @@ export default function SaveLocation(props) {
 
             if(getloc.includes(loc)) {
                 toast.warn(loc + " is already in your saved locations.");
+                setLoading(false);
             }
             else {
                 Axios({
@@ -42,6 +46,7 @@ export default function SaveLocation(props) {
                     }
                 });
                 toast.success(loc + " Added to your saved locations");
+                setLoading(false);
             }
         }
         else {
@@ -52,7 +57,13 @@ export default function SaveLocation(props) {
     return (
         <div>
             <form onSubmit={submit}>
-                <input class="saveBtn" type="submit" value="Save Location" />
+                <button class="saveBtn" type="submit">
+                    {loading==true ? (
+                        <div className="saveLoc-loader">
+                            <Loader type="Oval" color="crimson" height={20} width={20} />  
+                        </div>
+                    ) : "Save Location" }
+                </button>
                 <ToastContainer />
             </form>
         </div>

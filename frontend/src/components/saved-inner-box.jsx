@@ -3,7 +3,9 @@ import { Container, Row, Col, Alert } from 'react-bootstrap';
 import Axios from 'axios';
 import Loader from 'react-loader-spinner';
 import Modal from 'react-modal';
-import { AiFillDelete, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
+import { FaEye } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 var api_key = "b9543edbd9760109c497368df500290e";
 // b8bded5189dcb274c8d1256ef4e62932
@@ -16,9 +18,11 @@ export default function Saved_inner_box() {
     const [icon, setIcon] = useState();
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(false);
+    const [visible, setVisible] = useState(6);
 
     let loc = [];
     let i = 0;
+
     useEffect(() => {
         const getLoc = async (e) => {
             setLoading(true);
@@ -41,10 +45,14 @@ export default function Saved_inner_box() {
         getLoc();
     }, []);
 
+    const showMoreItems = () => {
+        setVisible((prevValue) => prevValue + 3);
+    }
+
     function showMore(value) {
         setLoading(true);
         setModal(true);
-        Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${value}`)
+        Axios.get(`http://api.weatherstack.com/current?access_key=b9543edbd9760109c497368df500290e&query=${value}`)
         .then((res) => {
             setTemprature(res.data.current.temperature);
             setDescription(res.data.current.weather_descriptions[0]);
@@ -88,22 +96,29 @@ export default function Saved_inner_box() {
                 </div>
             ) : null }
             {loading==true ? (
-                        <div className="saved-loader">
-                            <Loader type="Oval" color="crimson" height={50} width={50} />
-                        </div>  
-                    ) : null }
+                <div className="saved-loader">
+                    <Loader type="Oval" color="crimson" height={50} width={50} />
+                </div>  
+            ) : null }
             <Row>
-                {location.map((value, index) => {
+                {location.slice(0, visible).map((value, index) => {
                     return (
                         <Col md={4}>
-                            <div id={value} className="saved-box">
-                                <div class="text-right">
-                                    <button id={value} onClick={(e) => deleteLoc(e.target.id)} className="btn btn-lg btn-danger remove"><AiFillDelete /></button>
-                                </div>
+                            <motion.div 
+                                id={index} className="saved-box"
+                                whileHover = {{ scale: 1.1 }}
+                                transition = {{ duration: 1 }}    
+                            >
+                                <motion.div 
+                                    class="del-btn text-right"
+                                    initial = {{ opacity: 0, x: "-100vw"}}
+                                    animate={{ x: 0 }}
+                                    whileHover = {{ opacity: 1 }} 
+                                >
+                                    <button id={value} onClick={(e) => showMore(e.target.id)} className="btn btn-lg eye">👁️</button>
+                                    <button id={value} onClick={(e) => deleteLoc(e.target.id)} className="btn btn-lg remove">✖️</button>
+                                </motion.div>
                                 <h1 className="location" id={index}>{value}</h1>
-                                <div class="text-center">
-                                    <button id={value} onClick={(e) => showMore(e.target.id)} className="btn btn-block btn-info showMore">Show More</button>
-                                </div>
                                 <Modal isOpen={modal}>
                                     {loading==true ? (
                                         <div className="saved-loader">
@@ -123,12 +138,16 @@ export default function Saved_inner_box() {
                                     </div>
                                     }
                                 </Modal>
-                            </div>
+                            </motion.div>
                         </Col>
                     );
                 })}
             </Row>
-            <div className="footer"></div>
+            {loading==false && location.length != 0 ? (
+                <div className="load-more">
+                    <button onClick={showMoreItems}>Load More</button>
+                </div>
+            ) : null }
         </div>
     );
 }

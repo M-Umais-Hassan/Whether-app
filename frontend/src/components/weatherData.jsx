@@ -26,13 +26,13 @@ class WeatherData extends React.Component {
     }
 
     componentDidMount() {
-        Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=lahore`)
-        .then((res) => {
-            if (res.data.success=false, res.data.error.info="Your monthly usage limit has been reached. Please upgrade your Subscription Plan.") {
-                api_key = "b9543edbd9760109c497368df500290e";
-            }
-        })
-        .catch(err => console.log(err));
+        // Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=lahore`)
+        // .then((res) => {
+        //     if (res.data.success=false, res.data.error.info="Your monthly usage limit has been reached. Please upgrade your Subscription Plan.") {
+        //         api_key = "b9543edbd9760109c497368df500290e";
+        //     }
+        // })
+        // .catch(err => console.log(err));
 
         //get the device location (to check if the device supports geo location go at the last of this page)
         if(navigator.geolocation) {
@@ -45,7 +45,7 @@ class WeatherData extends React.Component {
                 this.setState({coords:newCoords});
 
                 //Calling the weatherstack api
-                Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${this.state.coords.latitude}, ${this.state.coords.longitude}`)
+                Axios.get(`http://api.weatherstack.com/current?access_key=b8bded5189dcb274c8d1256ef4e62932&query=${this.state.coords.latitude}, ${this.state.coords.longitude}`)
                 .then(res=>{
                     let weatherData = {
                         location: res.data.location.name,
@@ -64,8 +64,7 @@ class WeatherData extends React.Component {
                     console.log(err);
                     this.setState({error_msg: "Sorry some error occur try again later or search for some location."})
                 })
-            })
-            
+            })  
         }
     }
 
@@ -77,7 +76,7 @@ class WeatherData extends React.Component {
         event.preventDefault();
         this.setState({loading:false})
         this.setState({error_msg:""});
-        Axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${this.state.inputData}`)
+        Axios.get(`http://api.weatherstack.com/current?access_key=b8bded5189dcb274c8d1256ef4e62932&query=${this.state.inputData}`)
         .then(res=>{
             let weatherData = {
                 location: res.data.location.name,
@@ -179,12 +178,16 @@ class WeatherData extends React.Component {
         }
         else {
             return (
-                <div>
+                <motion.div
+                    initial={{ opacity: "0" }}
+                    animate={{ opacity: "1" }}
+                    transition={{ delay: 5 }}
+                >
                     <Alert style={alert_style} variant='danger'>
-                        <strong>Please allow your loation to view your weather data or search any location.</strong>
+                        <strong>We didn't found your location please search some location.</strong>
                     </Alert>
                     <Search_bar changeWeather = {this.changeWeather} changeRegion = {this.change} />
-                </div>
+                </motion.div>
             );
         }
     }

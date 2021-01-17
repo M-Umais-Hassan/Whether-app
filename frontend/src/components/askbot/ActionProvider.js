@@ -35,11 +35,7 @@ class ActionProvider {
                 const message = this.createChatBotMessage("The temprature low at "+location+" but you can travel because it is perfect for tourists");
                 this.addMessageToState(message);
             }
-            if (res.data.current.temperature > -10 && res.data.current.temperature <= 10 && res.data.current.weather_descriptions[0].toLowerCase() != 'snow') {
-                const message = this.createChatBotMessage("The temprature low at "+location+" but you can travel because it is perfect for tourists but there is no snow");
-                this.addMessageToState(message);
-            }
-            if(res.data.current.temperature > -10 && res.data.current.temperature <= 10 && res.data.current.weather_descriptions[0].toLowerCase() == 'snow') {
+            if(res.data.current.weather_descriptions[0].toLowerCase() == 'snow') {
                 const message = this.createChatBotMessage("Its time to enjoy snow ❄️⛄ but try to keep yourself safe while travellig towards " + location);
                 this.addMessageToState(message);
             }
