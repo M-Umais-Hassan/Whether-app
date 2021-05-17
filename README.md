@@ -3,7 +3,7 @@
 This is my semester project of Web technologies. 
 I have created a weather app using MERN stack. 
 For weather data I have used weather stack api.
-There are total of 4 pages:
+There are total of 5 pages:
 1. Home page (display the current weather + can search any place weather + a bot)
 2. Saved (Saved locations)
 3. About us page
