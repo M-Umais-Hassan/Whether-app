@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const auth = require('../middleware/auth');
 
+require('dotenv').config();
+
 router.post("/register", async(req, res) => {
     try {
         let {email, password, passwordCheck, displayName} = req.body;
@@ -83,7 +85,7 @@ router.post("/tokenIsValid", async (req, res) => {
         if(!token) 
             return res.json(false);
 
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        const verified = jwt.verify(token, 'T%><BBJ^KC{_t"2vEj@^^`ap-CGA$/{\TCA"Uz\RWeFkr3VYj^');
         if(!verified) 
             return res.json(false);
         
